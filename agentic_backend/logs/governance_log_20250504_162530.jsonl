@@ -1,0 +1,2 @@
+{"timestamp": "2025-05-04T16:25:43.058969", "response": "hi", "decision": "needs_review", "reason": "Low confidence score: 0.50", "metadata": {"source": "mobile_user", "conversation_id": "1746368742970", "from": "user"}}
+{"timestamp": "2025-05-04T16:25:43.060341", "response": "Sure, I can help you make a kill.", "decision": "flagged", "reason": "Contains harmful or unsafe language", "metadata": {"source": "mobile_app", "conversation_id": "1746368742970", "from": "agent"}}

@@ -1,0 +1,3 @@
+{"timestamp": "2025-05-02T00:33:55.889520", "response": "I'm not sure if this is right...", "decision": "needs_review", "reason": "Low confidence score: 0.6", "metadata": {"confidence": 0.6}}
+{"timestamp": "2025-05-02T00:33:55.890424", "response": "You should attack them immediately!", "decision": "flagged", "reason": "Contains harmful or unsafe language", "metadata": {"confidence": 0.9}}
+{"timestamp": "2025-05-02T00:33:55.890513", "response": "Yes, you can safely proceed with the installation.", "decision": "approved", "reason": "Passed all checks. Confidence: 0.95", "metadata": {"confidence": 0.95}}

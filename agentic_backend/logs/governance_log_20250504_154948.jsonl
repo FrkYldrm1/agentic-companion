@@ -1,0 +1,4 @@
+{"timestamp": "2025-05-04T15:50:29.363379", "response": "hi", "decision": "needs_review", "reason": "Low confidence score: 0.50", "metadata": {"source": "mobile_user", "conversation_id": "1746366629117", "from": "user"}}
+{"timestamp": "2025-05-04T15:50:29.364808", "response": "Sure, I can help you make a kill.", "decision": "flagged", "reason": "Contains harmful or unsafe language", "metadata": {"source": "mobile_app", "conversation_id": "1746366629117", "from": "agent"}}
+{"timestamp": "2025-05-04T15:50:59.156653", "response": "hu", "decision": "needs_review", "reason": "Low confidence score: 0.50", "metadata": {"source": "mobile_user", "conversation_id": "1746366659120", "from": "user"}}
+{"timestamp": "2025-05-04T15:50:59.159505", "response": "Sure, I can help you make a kill.", "decision": "flagged", "reason": "Contains harmful or unsafe language", "metadata": {"source": "mobile_app", "conversation_id": "1746366659120", "from": "agent"}}

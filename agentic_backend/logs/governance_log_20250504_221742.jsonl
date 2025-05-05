@@ -1,0 +1,2 @@
+{"timestamp": "2025-05-04T22:19:34.216377", "response": "hi", "decision": "needs_review", "reason": "Low confidence score: 0.50", "metadata": {"source": "mobile_user", "conversation_id": "1746389974194", "from": "user"}}
+{"timestamp": "2025-05-04T22:19:34.982391", "response": "Hello! How are you doing today?", "decision": "approved", "reason": "Passed all checks. Confidence: 0.70", "metadata": {"source": "mobile_app", "conversation_id": "1746389974194", "from": "agent"}}

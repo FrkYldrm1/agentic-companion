@@ -1,0 +1,4 @@
+{"timestamp": "2025-05-04T23:14:28.826166", "response": "hi", "decision": "needs_review", "reason": "Low confidence score: 0.50", "metadata": {"source": "mobile_user", "conversation_id": "1746393268904", "from": "user"}}
+{"timestamp": "2025-05-04T23:14:29.620728", "response": "Hello! How are you today?", "decision": "approved", "reason": "Passed all checks. Confidence: 0.70", "metadata": {"source": "mobile_app", "conversation_id": "1746393268904", "from": "agent"}}
+{"timestamp": "2025-05-04T23:14:38.305414", "response": "hi", "decision": "needs_review", "reason": "Low confidence score: 0.50", "metadata": {"source": "mobile_user", "conversation_id": "1746393278421", "from": "user"}}
+{"timestamp": "2025-05-04T23:14:38.887404", "response": "Hello! How are you today?", "decision": "approved", "reason": "Passed all checks. Confidence: 0.70", "metadata": {"source": "mobile_app", "conversation_id": "1746393278421", "from": "agent"}}

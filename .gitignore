@@ -1,0 +1,70 @@
+# === ENVIRONMENT & SENSITIVE FILES ===
+.env
+.env.*
+
+# === PYTHON ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+*.db
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Migrations
+migrate_working_dir/
+
+# === FLUTTER/DART ===
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+.idea/
+
+# iOS
+ios/Flutter/.last_build_id
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# Android
+android/.gradle/
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/local.properties
+
+# Symbolication & Obfuscation
+app.*.symbols
+app.*.map.json
+
+# === INTELLIJ / ANDROID STUDIO ===
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# === VS CODE ===
+.vscode/
+
+# === MACOS ===
+.DS_Store
+
+# === OTHER ===
+*.class
+*.swp
+*.bak
+.history
+.svn/
+.atom/
+.buildlog/
+doc/api/
