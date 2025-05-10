@@ -67,7 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _listenToSupervisorResponse(String conversationId) {
     final channel = WebSocketChannel.connect(
-      Uri.parse('ws://192.168.50.219:8000/ws/$conversationId'),
+      Uri.parse('ws://192.168.50.39:8000/ws/$conversationId'),
     );
 
     channel.stream.listen((finalReply) async {
@@ -84,7 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<String> fetchAgentReply(
       String userMessage, String conversationId) async {
-    final url = Uri.parse('http://192.168.50.219:8000/agent/chat');
+    final url = Uri.parse('http://192.168.50.39:8000/agent/chat');
     try {
       final response = await http.post(
         url,

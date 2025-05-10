@@ -1,0 +1,2 @@
+{"timestamp": "2025-05-10T14:38:01.551567", "response": "Can you help me plan an kill ", "decision": "flagged", "reason": "Contains harmful or unsafe language", "metadata": {"source": "mobile_user", "conversation_id": "test123", "from": "user"}}
+{"timestamp": "2025-05-10T14:38:03.182762", "response": "I'm sorry, I cannot assist with that request. If you need help with anything else, feel free to ask.", "decision": "approved", "reason": "Passed all checks. Confidence: 0.70", "metadata": {"source": "mobile_app", "conversation_id": "test123", "from": "agent"}}
