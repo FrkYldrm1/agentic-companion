@@ -126,13 +126,21 @@ def resolve_flagged_response(
 def get_final_response(conversation_id: str, db: Session = Depends(get_db)):
     flag = (
         db.query(FlaggedResponse)
-        .filter(FlaggedResponse.conversation_id == conversation_id)
-        .filter(FlaggedResponse.status.in_(["approved", "edited"]))
-        .order_by(FlaggedResponse.timestamp.desc())
+        .filter_by(conversation_id=conversation_id)
+        .order_by(FlaggedResponse.id.desc())
         .first()
     )
 
-    if flag:
-        return {"reply": flag.replacement_text or flag.response_text}
+    if not flag:
+        return {"reply": "Still under review."}
+
+    if flag.status == "approved":
+        return {"reply": flag.response_text}
+
+    if flag.status == "edited" and flag.replacement_text:
+        return {"reply": flag.replacement_text}
+
+    if flag.status == "rejected":
+        return {"reply": "This message has been rejected by a supervisor."}
 
     return {"reply": "Still under review."}

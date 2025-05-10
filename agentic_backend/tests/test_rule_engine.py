@@ -1,6 +1,6 @@
-from rule_engine import RuleEngine
-from audit_logger import AuditLogger
-from intervention import InterventionHandler
+from governance_layer.rule_engine import RuleEngine
+from governance_layer.audit_logger import AuditLogger
+from governance_layer.intervention import InterventionHandler
 
 # Initialize modules
 engine = RuleEngine(confidence_threshold=0.7)
