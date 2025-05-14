@@ -1,0 +1,101 @@
+:root {
+    --green: #e0f7f1;
+    --yellow: #fff7d1;
+    --blue: #e1ecfb;
+    --border-green: #b0e7d0;
+    --border-yellow: #fce08a;
+    --border-blue: #b2d4f5;
+    --card-radius: 14px;
+    --font-main: "Segoe UI", sans-serif;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.dashboard-card {
+    background-color: white;
+    border-radius: var(--card-radius);
+    padding: 1.2rem;
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: scale(1.01);
+}
+
+.stat-green {
+    background-color: var(--green);
+    border-left: 6px solid var(--border-green);
+}
+
+.stat-yellow {
+    background-color: var(--yellow);
+    border-left: 6px solid var(--border-yellow);
+}
+
+.stat-blue {
+    background-color: var(--blue);
+    border-left: 6px solid var(--border-blue);
+}
+
+.dashboard-card-icon {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+}
+
+.dashboard-card-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.dashboard-card-count {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.button-green,
+.button-blue,
+.button-red {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button-green {
+    background-color: #e0f7f1;
+    border-color: #a3d5bf;
+}
+
+.button-green:hover {
+    background-color: #c6f1e1;
+}
+
+.button-blue {
+    background-color: #e1ecfb;
+    border-color: #a2c2f0;
+}
+
+.button-blue:hover {
+    background-color: #d0e4fa;
+}
+
+.button-red {
+    background-color: #fdeaea;
+    border-color: #f5a3a3;
+}
+
+.button-red:hover {
+    background-color: #fad0d0;
+}
