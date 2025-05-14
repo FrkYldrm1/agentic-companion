@@ -6,5 +6,5 @@ llm = LLMClient()
 
 
 async def generate_agent_reply(message: str) -> str:
-    #return llm.get_response(message)
-    return "Maybe you should kill yourself!"
+    return llm.get_response(message)
+    #return "Maybe you should kill yourself!" # Governace trigger.
