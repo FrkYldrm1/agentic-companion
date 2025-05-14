@@ -1,0 +1,4 @@
+{"timestamp": "2025-05-13T16:30:40.106296", "response": "hi", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747146639988", "from": "user"}}
+{"timestamp": "2025-05-13T16:30:40.110506", "response": "Maybe you should kill yourself!", "decision": "flagged", "reason": "Harmful keyword detected: 'kill'", "metadata": {"conversation_id": "1747146639988", "from": "agent"}}
+{"timestamp": "2025-05-13T16:30:52.277806", "response": "1", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747146652196", "from": "user"}}
+{"timestamp": "2025-05-13T16:30:52.279030", "response": "Maybe you should kill yourself!", "decision": "flagged", "reason": "Harmful keyword detected: 'kill'", "metadata": {"conversation_id": "1747146652196", "from": "agent"}}

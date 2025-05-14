@@ -1,0 +1,2 @@
+{"timestamp": "2025-05-13T15:41:43.743290", "response": "1", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747143703719", "from": "user"}}
+{"timestamp": "2025-05-13T15:41:43.743744", "response": "Maybe you should kill yourself!", "decision": "flagged", "reason": "Harmful keyword detected: 'kill'", "metadata": {"conversation_id": "1747143703719", "from": "agent"}}

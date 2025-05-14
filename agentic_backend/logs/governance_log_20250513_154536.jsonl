@@ -1,0 +1,2 @@
+{"timestamp": "2025-05-13T15:45:42.967182", "response": "I feel lonely!", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747143942956", "from": "user"}}
+{"timestamp": "2025-05-13T15:45:44.416308", "response": "I'm here for you! I can keep you company and chat with you whenever you're feeling lonely. Is there anything specific you'd like to talk about or do together?", "decision": "approved", "reason": "Passed all checks. Confidence: 0.70", "metadata": {"conversation_id": "1747143942956", "from": "agent"}}

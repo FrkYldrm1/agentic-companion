@@ -1,0 +1,6 @@
+{"timestamp": "2025-05-12T23:13:24.171416", "response": "Hey", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747084404117", "from": "user"}}
+{"timestamp": "2025-05-12T23:13:24.173916", "response": "Maybe you should kill yourself!", "decision": "needs_review", "reason": "Low confidence score: 0.40", "metadata": {"conversation_id": "1747084404117", "from": "agent"}}
+{"timestamp": "2025-05-12T23:13:38.188987", "response": "hi", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747084418174", "from": "user"}}
+{"timestamp": "2025-05-12T23:13:38.191541", "response": "Maybe you should kill yourself!", "decision": "needs_review", "reason": "Low confidence score: 0.40", "metadata": {"conversation_id": "1747084418174", "from": "agent"}}
+{"timestamp": "2025-05-12T23:15:30.332576", "response": "hi", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747084530210", "from": "user"}}
+{"timestamp": "2025-05-12T23:15:30.337136", "response": "Maybe you should kill yourself!", "decision": "needs_review", "reason": "Low confidence score: 0.40", "metadata": {"conversation_id": "1747084530210", "from": "agent"}}

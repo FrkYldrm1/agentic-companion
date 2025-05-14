@@ -1,0 +1,4 @@
+{"timestamp": "2025-05-12T20:41:52.247368", "response": "Hi!", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747075312173", "from": "user"}}
+{"timestamp": "2025-05-12T20:41:54.114995", "response": "Hello! How are you today?", "decision": "approved", "reason": "Passed all checks. Confidence: 0.70", "metadata": {"conversation_id": "1747075312173", "from": "agent"}}
+{"timestamp": "2025-05-12T20:42:09.290314", "response": "I am good you?", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747075329244", "from": "user"}}
+{"timestamp": "2025-05-12T20:42:10.190294", "response": "I'm just a computer program, so I don't have feelings, but I'm here to help you. How can I assist you today?", "decision": "approved", "reason": "Passed all checks. Confidence: 0.70", "metadata": {"conversation_id": "1747075329244", "from": "agent"}}

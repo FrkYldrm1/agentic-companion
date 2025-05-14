@@ -9,11 +9,11 @@ logging.basicConfig(level=logging.INFO)
 
 
 class RuleEngine:
-    def __init__(self, confidence_threshold=0.7):
+    def __init__(self, confidence_threshold=0.5):
         self.confidence_threshold = confidence_threshold
         self.estimator = ConfidenceEstimator()
 
-        # 👇 Use regex word boundaries to avoid partial matches
+        # 👇 Use regex with word boundaries to catch exact harmful words
         self.harmful_keywords = [
             r"\bkill\b",
             r"\bsuicide\b",
@@ -38,27 +38,29 @@ class RuleEngine:
             else:
                 confidence = self.estimator.from_heuristics(response)
 
-        # --- Debug log ---
+        # --- Logging ---
         logger.info(f"🧠 Agent Response: {response}")
-        logger.info(f"🔢 Confidence: {confidence:.2f}")
+        logger.info(f"🔢 Estimated Confidence: {confidence:.2f}")
 
-        # --- Rule 1: Confidence too low ---
+        # --- Rule 1: Harmful or unsafe language ---
+        response_lower = response.lower()
+        for pattern in self.harmful_keywords:
+            match = re.search(pattern, response_lower)
+            if match:
+                matched_word = match.group()
+                logger.warning(f"🚨 Harmful keyword match: '{matched_word}'")
+                return {
+                    "decision": "flagged",
+                    "reason": f"Harmful keyword detected: '{matched_word}'",
+                }
+
+        # --- Rule 2: Confidence too low ---
         if confidence < self.confidence_threshold:
             logger.warning("⚠️ Low confidence — needs review")
             return {
                 "decision": "needs_review",
                 "reason": f"Low confidence score: {confidence:.2f}",
             }
-
-        # --- Rule 2: Harmful or unsafe language ---
-        response_lower = response.lower()
-        for pattern in self.harmful_keywords:
-            if re.search(pattern, response_lower):
-                logger.warning(f"🚨 Harmful keyword match: {pattern}")
-                return {
-                    "decision": "flagged",
-                    "reason": "Contains harmful or unsafe language",
-                }
 
         # --- Rule 3: Passed ---
         logger.info("✅ Approved by rule engine")

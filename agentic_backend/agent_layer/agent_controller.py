@@ -1,11 +1,10 @@
-# ✅ agent_controller.py (refactored to use orchestrator)
-
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from orchestration_layer.orchestrator import orchestrate_response
 from memory_layer.models import FlaggedResponse
 from sqlalchemy.orm import Session
 from memory_layer.db import get_db
+import traceback
 
 router = APIRouter()
 
@@ -23,8 +22,18 @@ class ChatResponse(BaseModel):
 async def chat(request: ChatRequest):
     try:
         reply = await orchestrate_response(request.message, request.conversation_id)
+        print(f"🛫 [RETURNING TO CLIENT] {reply} (type: {type(reply)})")
+
+        # Ensure it's a plain string — if not, convert it
+        if not isinstance(reply, str):
+            print("⚠️ Reply is not a string, converting...")
+            reply = str(reply)
+
         return ChatResponse(reply=reply)
+
     except Exception as e:
+        print("❌ Exception in /agent/chat:")
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 

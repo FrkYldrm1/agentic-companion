@@ -1,14 +1,11 @@
-# orchestrator.py
-
 from agent_layer.responder import generate_agent_reply
 from governance_layer.rule_engine import RuleEngine
 from governance_layer.audit_logger import AuditLogger
 from governance_layer.intervention import InterventionHandler
-from governance_layer.websocket_routes import get_connection
-from sqlalchemy.orm import Session
-from memory_layer.db import get_db
+from memory_layer.db import SessionLocal
 from memory_layer.models import FlaggedResponse
-import asyncio
+from sqlalchemy.exc import SQLAlchemyError
+import traceback
 
 engine = RuleEngine()
 logger = AuditLogger()
@@ -16,100 +13,81 @@ intervention = InterventionHandler()
 
 
 async def orchestrate_response(message: str, conversation_id: str) -> str:
-    # Step 1: Check user input
+    print(f"📥 [START] Received user message: {message}")
+
+    # Step 1: Governance check on user input
     user_check = engine.check(response=message)
+    print(f"🧪 [CHECK] User input decision: {user_check}")
+
     logger.log(
         response=message,
         decision=user_check["decision"],
         reason=user_check["reason"],
-        metadata={
-            "source": "mobile_user",
-            "conversation_id": conversation_id,
-            "from": "user",
-        },
+        metadata={"conversation_id": conversation_id, "from": "user"},
     )
+
     if user_check["decision"] in ("needs_review", "flagged"):
-        intervention.queue_for_review(
-            response=message,
-            reason=user_check["reason"],
-            metadata={
-                "source": "mobile_user",
-                "conversation_id": conversation_id,
-                "from": "user",
-            },
-        )
+        print("⚠️ [ACTION] User input flagged. Queuing for review...")
+        intervention.queue_for_review(message, user_check["reason"], {"from": "user"})
 
-        # ✅ NEW: Save flagged user input to DB
         try:
-            db: Session = next(get_db())
-            user_flag = FlaggedResponse(
-                user_id=None,
-                input_text=message,
-                response_text="[input flagged — no response generated yet]",
-                reason=user_check["reason"],
-                confidence_score=0.5,
-                conversation_id=conversation_id,
-                context={"source": "mobile_user", "from": "user"},
-            )
-            db.add(user_flag)
-            db.commit()
-        except Exception as e:
-            print(f"❌ Failed to save flagged user input: {e}")
+            with SessionLocal() as db:
+                user_flag = FlaggedResponse(
+                    user_id=None,
+                    input_text=message,
+                    response_text="[input flagged — no response generated yet]",
+                    reason=user_check["reason"],
+                    confidence_score=0.5,
+                    conversation_id=conversation_id,
+                    context={"source": "mobile_user", "from": "user"},
+                    status="pending",
+                )
+                db.add(user_flag)
+                db.commit()
+        except SQLAlchemyError:
+            print("❌ Failed to save flagged user input:")
+            traceback.print_exc()
 
-    # Step 2: Generate agent reply
+    # Step 2: Agent reply
     reply = await generate_agent_reply(message)
+    print(f"🤖 [REPLY] Agent generated: {reply}")
 
-    # Step 3: Check agent output
+    # Step 3: Governance check on agent reply
     result = engine.check(response=reply)
+    print(f"🧪 [CHECK] Agent reply decision: {result}")
+
     logger.log(
         response=reply,
         decision=result["decision"],
         reason=result["reason"],
-        metadata={
-            "source": "mobile_app",
-            "conversation_id": conversation_id,
-            "from": "agent",
-        },
+        metadata={"conversation_id": conversation_id, "from": "agent"},
     )
 
     if result["decision"] in ("needs_review", "flagged"):
-        intervention.queue_for_review(
-            response=reply,
-            reason=result["reason"],
-            metadata={
-                "source": "mobile_app",
-                "conversation_id": conversation_id,
-                "from": "agent",
-            },
-        )
+        print("⚠️ [ACTION] Agent reply flagged. Queuing for review...")
+        intervention.queue_for_review(reply, result["reason"], {"from": "agent"})
 
-        # Save flagged agent reply to DB
         try:
-            db: Session = next(get_db())
-            flag = FlaggedResponse(
-                user_id=None,
-                input_text=message,
-                response_text=reply,
-                reason=result["reason"],
-                confidence_score=0.5,
-                conversation_id=conversation_id,
-                context={"source": "mobile_app", "from": "agent"},
-            )
-            db.add(flag)
-            db.commit()
-        except Exception as e:
-            print(f"❌ Failed to save flagged agent response: {e}")
+            with SessionLocal() as db:
+                flag = FlaggedResponse(
+                    user_id=None,
+                    input_text=message,
+                    response_text=reply,
+                    reason=result["reason"],
+                    confidence_score=0.5,
+                    conversation_id=conversation_id,
+                    context={"source": "mobile_app", "from": "agent"},
+                    status="pending",
+                )
+                db.add(flag)
+                db.commit()
+        except SQLAlchemyError:
+            print("❌ Failed to save flagged agent response:")
+            traceback.print_exc()
             return "Internal error saving flagged message."
 
-        return "Thank you! A supervisor is reviewing this reply."
+        return "This topic deserves a careful answer. I am going to share it with someone more experienced so we can give you the best support."
 
-    # Step 4: Push approved reply to WebSocket if connected
-    websocket = get_connection(conversation_id)
-    if websocket:
-        try:
-            asyncio.create_task(websocket.send_text(reply))
-            print(f"📤 Sent agent reply to WebSocket: {conversation_id}")
-        except Exception as e:
-            print(f"❌ WebSocket send failed: {e}")
-
+    # ✅ Step 4: Return the approved reply via HTTP only (no WebSocket)
+    print(f"✅ [RETURN] Returning reply to HTTP: {reply}")
     return reply

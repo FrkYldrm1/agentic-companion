@@ -72,10 +72,25 @@ class _ChatScreenState extends State<ChatScreen> {
 
     channel.stream.listen((finalReply) async {
       print("🎯 WebSocket reply: $finalReply");
+
       setState(() {
-        _messages.add({'sender': 'supervisor', 'text': finalReply});
+        final reviewIndex = _messages.lastIndexWhere(
+          (msg) =>
+              msg['sender'] == 'agent' &&
+              msg['text'] == 'Thank you! A supervisor is reviewing this reply.',
+        );
+        if (reviewIndex != -1) {
+          _messages[reviewIndex] = {'sender': 'supervisor', 'text': finalReply};
+        } else {
+          _messages.add({'sender': 'supervisor', 'text': finalReply});
+        }
       });
-      await _tts.speak(finalReply);
+
+      if (_lastInputWasVoice) {
+        await _tts.speak(finalReply);
+        _lastInputWasVoice = false;
+      }
+
       channel.sink.close();
     }, onError: (error) {
       print("❌ WebSocket error: $error");
@@ -123,7 +138,14 @@ class _ChatScreenState extends State<ChatScreen> {
     final reply = await fetchAgentReply(text, conversationId);
 
     setState(() {
-      _messages[_messages.length - 1] = {'sender': 'agent', 'text': reply};
+      final loadingIndex = _messages.lastIndexWhere(
+        (msg) => msg['sender'] == 'agent' && msg['text'] == '...',
+      );
+      if (loadingIndex != -1) {
+        _messages[loadingIndex] = {'sender': 'agent', 'text': reply};
+      } else {
+        _messages.add({'sender': 'agent', 'text': reply});
+      }
     });
 
     if (_lastInputWasVoice) {
@@ -133,29 +155,9 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget _buildMessage(Map<String, String> message) {
-    final isUser = message['sender'] == 'user';
-    final isSupervisor = message['sender'] == 'supervisor';
-    final bgColor = isUser
-        ? Colors.teal[100]
-        : isSupervisor
-            ? Colors.orange[100]
-            : Colors.grey[200];
-
-    return Align(
-      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        padding: const EdgeInsets.all(16),
-        constraints: const BoxConstraints(maxWidth: 300),
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Text(
-          message['text'] ?? '',
-          style: const TextStyle(fontSize: 18),
-        ),
-      ),
+    return ChatBubble(
+      sender: message['sender'] ?? 'agent',
+      text: message['text'] ?? '',
     );
   }
 
@@ -211,6 +213,50 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ✅ ChatBubble Widget with Spinner Support
+class ChatBubble extends StatelessWidget {
+  final String sender;
+  final String text;
+
+  const ChatBubble({required this.sender, required this.text, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final isUser = sender == 'user';
+    final isSupervisor = sender == 'supervisor';
+    final bgColor = isUser
+        ? Colors.teal[100]
+        : isSupervisor
+            ? Colors.orange[100]
+            : Colors.grey[200];
+
+    final alignment = isUser ? Alignment.centerRight : Alignment.centerLeft;
+
+    return Align(
+      alignment: alignment,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        padding: const EdgeInsets.all(16),
+        constraints: const BoxConstraints(maxWidth: 300),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: text == '...'
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : Text(
+                text,
+                style: const TextStyle(fontSize: 18),
+              ),
       ),
     );
   }

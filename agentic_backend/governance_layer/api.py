@@ -102,6 +102,7 @@ def resolve_flagged_response(
     db.commit()
     db.refresh(flag)
 
+    # ✅ Push to WebSocket ONLY when resolved
     conv_id = flag.conversation_id
     if conv_id and conv_id in active_connections:
         response_text = flag.replacement_text or flag.response_text
