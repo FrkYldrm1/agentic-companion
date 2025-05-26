@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     final response =
-        await http.get(Uri.parse('http://192.168.50.39:8000/users'));
+        await http.get(Uri.parse('http://192.168.50.219:8000/users'));
 
     if (response.statusCode == 200) {
       final users = jsonDecode(response.body);

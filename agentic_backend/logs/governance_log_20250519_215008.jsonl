@@ -1,0 +1,2 @@
+{"timestamp": "2025-05-19T21:50:24.170394", "response": "Hi!", "decision": "approved", "reason": "Passed all checks. Confidence: 0.50", "metadata": {"conversation_id": "1747684224091", "from": "user"}}
+{"timestamp": "2025-05-19T21:50:25.652953", "response": "Hello! How are you today?", "decision": "approved", "reason": "Passed all checks. Confidence: 0.70", "metadata": {"conversation_id": "1747684224091", "from": "agent"}}

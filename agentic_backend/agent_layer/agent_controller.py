@@ -26,13 +26,13 @@ async def chat(request: ChatRequest):
 
         # Ensure it's a plain string — if not, convert it
         if not isinstance(reply, str):
-            print("⚠️ Reply is not a string, converting...")
+            print(" Reply is not a string, converting...")
             reply = str(reply)
 
         return ChatResponse(reply=reply)
 
     except Exception as e:
-        print("❌ Exception in /agent/chat:")
+        print(" Exception in /agent/chat:")
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -48,8 +48,8 @@ def get_final_response(conversation_id: str, db: Session = Depends(get_db)):
     )
 
     if flag:
-        print(f"✅ Final response found: status={flag.status}")
+        print(f" Final response found: status={flag.status}")
         return {"reply": flag.replacement_text or flag.response_text}
 
-    print("⏳ Still under review.")
+    print(" Still under review.")
     return {"reply": "Still under review."}

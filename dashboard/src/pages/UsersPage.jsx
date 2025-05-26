@@ -26,14 +26,14 @@ const UsersPage = () => {
                 age: "", hobbies: "", language: ""
             });
         } catch (error) {
-            setMessage(error.message || "❌ Failed to create user.");
+            setMessage(error.message || "Failed to create user.");
         }
     };
 
     useEffect(() => {
         getUsers()
             .then(setUsers)
-            .catch((err) => setMessage("❌ Could not load users"));
+            .catch((err) => setMessage(" Could not load users"));
     }, []);
 
     return (

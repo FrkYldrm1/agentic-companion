@@ -20,13 +20,13 @@ active_connections: Dict[str, WebSocket] = {}
 async def websocket_endpoint(websocket: WebSocket, conversation_id: str):
     await websocket.accept()
     active_connections[conversation_id] = websocket
-    print(f"✅ WebSocket connection open: {conversation_id}")
+    print(f" WebSocket connection open: {conversation_id}")
     try:
         while True:
             await websocket.receive_text()
     except WebSocketDisconnect:
         del active_connections[conversation_id]
-        print(f"❌ WebSocket disconnected: {conversation_id}")
+        print(f" WebSocket disconnected: {conversation_id}")
 
 
 # ----------------------
@@ -102,7 +102,7 @@ def resolve_flagged_response(
     db.commit()
     db.refresh(flag)
 
-    # ✅ Push to WebSocket ONLY when resolved
+    #  Push to WebSocket ONLY when resolved
     conv_id = flag.conversation_id
     if conv_id and conv_id in active_connections:
         response_text = flag.replacement_text or flag.response_text
@@ -116,9 +116,9 @@ def resolve_flagged_response(
                 loop.run_until_complete(
                     active_connections[conv_id].send_text(response_text)
                 )
-            print(f"📡 WebSocket pushed to {conv_id}: {response_text}")
+            print(f" WebSocket pushed to {conv_id}: {response_text}")
         except Exception as e:
-            print(f"❌ WebSocket send error: {e}")
+            print(f" WebSocket send error: {e}")
 
     return {"status": "resolved", "flag_id": flag.id, "new_status": flag.status}
 

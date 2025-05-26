@@ -67,11 +67,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _listenToSupervisorResponse(String conversationId) {
     final channel = WebSocketChannel.connect(
-      Uri.parse('ws://192.168.50.39:8000/ws/$conversationId'),
+      Uri.parse('ws://192.168.50.219:8000/ws/$conversationId'),
     );
 
     channel.stream.listen((finalReply) async {
-      print("🎯 WebSocket reply: $finalReply");
+      print(" WebSocket reply: $finalReply");
 
       setState(() {
         final reviewIndex = _messages.lastIndexWhere(
@@ -93,13 +93,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
       channel.sink.close();
     }, onError: (error) {
-      print("❌ WebSocket error: $error");
+      print(" WebSocket error: $error");
     });
   }
 
   Future<String> fetchAgentReply(
       String userMessage, String conversationId) async {
-    final url = Uri.parse('http://192.168.50.39:8000/agent/chat');
+    final url = Uri.parse('http://192.168.50.219:8000/agent/chat');
     try {
       final response = await http.post(
         url,
@@ -218,7 +218,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
-// ✅ ChatBubble Widget with Spinner Support
+// ChatBubble Widget with Spinner Support
 class ChatBubble extends StatelessWidget {
   final String sender;
   final String text;

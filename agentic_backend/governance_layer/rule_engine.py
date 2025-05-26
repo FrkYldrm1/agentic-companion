@@ -13,7 +13,7 @@ class RuleEngine:
         self.confidence_threshold = confidence_threshold
         self.estimator = ConfidenceEstimator()
 
-        # 👇 Use regex with word boundaries to catch exact harmful words
+        #  Use regex with word boundaries to catch exact harmful words
         self.harmful_keywords = [
             r"\bkill\b",
             r"\bsuicide\b",
@@ -39,8 +39,8 @@ class RuleEngine:
                 confidence = self.estimator.from_heuristics(response)
 
         # --- Logging ---
-        logger.info(f"🧠 Agent Response: {response}")
-        logger.info(f"🔢 Estimated Confidence: {confidence:.2f}")
+        logger.info(f" Agent Response: {response}")
+        logger.info(f" Estimated Confidence: {confidence:.2f}")
 
         # --- Rule 1: Harmful or unsafe language ---
         response_lower = response.lower()
@@ -48,7 +48,7 @@ class RuleEngine:
             match = re.search(pattern, response_lower)
             if match:
                 matched_word = match.group()
-                logger.warning(f"🚨 Harmful keyword match: '{matched_word}'")
+                logger.warning(f" Harmful keyword match: '{matched_word}'")
                 return {
                     "decision": "flagged",
                     "reason": f"Harmful keyword detected: '{matched_word}'",
@@ -56,14 +56,14 @@ class RuleEngine:
 
         # --- Rule 2: Confidence too low ---
         if confidence < self.confidence_threshold:
-            logger.warning("⚠️ Low confidence — needs review")
+            logger.warning(" Low confidence — needs review")
             return {
                 "decision": "needs_review",
                 "reason": f"Low confidence score: {confidence:.2f}",
             }
 
         # --- Rule 3: Passed ---
-        logger.info("✅ Approved by rule engine")
+        logger.info(" Approved by rule engine")
         return {
             "decision": "approved",
             "reason": f"Passed all checks. Confidence: {confidence:.2f}",

@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from agent_layer.agent_controller import router as agent_router
 from governance_layer.api import router as governance_router
-from governance_layer.websocket_routes import register_websocket_routes  # ✅ updated
+from governance_layer.websocket_routes import register_websocket_routes  #  updated
 from interface_layer.api import router as user_router
 
 from memory_layer.models import Base
@@ -30,7 +30,7 @@ app.include_router(governance_router, prefix="/governance")
 app.include_router(user_router)
 
 # Register the WebSocket route separately (not via include_router)
-register_websocket_routes(app)  # ✅ properly adds /ws/{conversation_id}
+register_websocket_routes(app)  # properly adds /ws/{conversation_id}
 
 # Initialize database tables
 Base.metadata.create_all(bind=engine)

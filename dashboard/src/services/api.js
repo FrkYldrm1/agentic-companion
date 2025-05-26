@@ -53,14 +53,14 @@ export async function createUser(userData) {
 
     if (!res.ok) {
         const error = await res.text();
-        console.error("❌ Backend error:", error);
+        console.error("Backend error:", error);
         throw new Error(`Failed to create user: ${res.status} — ${error}`);
     }
 
     if (!res.ok) {
     const errorText = await res.text();
     if (res.status === 500 && errorText.includes("UNIQUE constraint failed")) {
-        throw new Error("❌ Username already exists. Choose another one.");
+        throw new Error(" Username already exists. Choose another one.");
     }
     throw new Error(`Failed to create user: ${res.status} — ${errorText}`);
 }

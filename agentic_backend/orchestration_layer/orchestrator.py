@@ -13,11 +13,11 @@ intervention = InterventionHandler()
 
 
 async def orchestrate_response(message: str, conversation_id: str) -> str:
-    print(f"📥 [START] Received user message: {message}")
+    print(f" [START] Received user message: {message}")
 
     # Step 1: Governance check on user input
     user_check = engine.check(response=message)
-    print(f"🧪 [CHECK] User input decision: {user_check}")
+    print(f" [CHECK] User input decision: {user_check}")
 
     logger.log(
         response=message,
@@ -27,7 +27,7 @@ async def orchestrate_response(message: str, conversation_id: str) -> str:
     )
 
     if user_check["decision"] in ("needs_review", "flagged"):
-        print("⚠️ [ACTION] User input flagged. Queuing for review...")
+        print(" [ACTION] User input flagged. Queuing for review...")
         intervention.queue_for_review(message, user_check["reason"], {"from": "user"})
 
         try:
@@ -45,16 +45,16 @@ async def orchestrate_response(message: str, conversation_id: str) -> str:
                 db.add(user_flag)
                 db.commit()
         except SQLAlchemyError:
-            print("❌ Failed to save flagged user input:")
+            print("Failed to save flagged user input:")
             traceback.print_exc()
 
     # Step 2: Agent reply
     reply = await generate_agent_reply(message)
-    print(f"🤖 [REPLY] Agent generated: {reply}")
+    print(f"[REPLY] Agent generated: {reply}")
 
     # Step 3: Governance check on agent reply
     result = engine.check(response=reply)
-    print(f"🧪 [CHECK] Agent reply decision: {result}")
+    print(f" [CHECK] Agent reply decision: {result}")
 
     logger.log(
         response=reply,
@@ -64,7 +64,7 @@ async def orchestrate_response(message: str, conversation_id: str) -> str:
     )
 
     if result["decision"] in ("needs_review", "flagged"):
-        print("⚠️ [ACTION] Agent reply flagged. Queuing for review...")
+        print(" [ACTION] Agent reply flagged. Queuing for review...")
         intervention.queue_for_review(reply, result["reason"], {"from": "agent"})
 
         try:
@@ -82,12 +82,12 @@ async def orchestrate_response(message: str, conversation_id: str) -> str:
                 db.add(flag)
                 db.commit()
         except SQLAlchemyError:
-            print("❌ Failed to save flagged agent response:")
+            print(" Failed to save flagged agent response:")
             traceback.print_exc()
             return "Internal error saving flagged message."
 
         return "This topic deserves a careful answer. I am going to share it with someone more experienced so we can give you the best support."
 
-    # ✅ Step 4: Return the approved reply via HTTP only (no WebSocket)
-    print(f"✅ [RETURN] Returning reply to HTTP: {reply}")
+    #  Step 4: Return the approved reply via HTTP only (no WebSocket)
+    print(f" [RETURN] Returning reply to HTTP: {reply}")
     return reply

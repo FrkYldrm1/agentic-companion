@@ -3,7 +3,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import traceback
 
-# ✅ Force-load .env from correct path
+#  Force-load .env from correct path
 from pathlib import Path
 
 dotenv_path = Path(__file__).resolve().parent.parent / ".env"
@@ -16,7 +16,7 @@ class LLMClient:
         print(f"🔍 Loaded OPENAI_API_KEY: {api_key}")  # Diagnostic print
 
         if not api_key or not api_key.startswith("sk-"):
-            raise ValueError(f"❌ Invalid or missing OPENAI_API_KEY: {api_key}")
+            raise ValueError(f" Invalid or missing OPENAI_API_KEY: {api_key}")
         self.client = OpenAI(api_key=api_key)
 
     def get_response(self, message: str) -> str:
@@ -35,10 +35,10 @@ class LLMClient:
                 max_tokens=200,
             )
             reply = response.choices[0].message.content.strip()
-            print(f"✅ OpenAI reply: {reply}")
+            print(f" OpenAI reply: {reply}")
             return reply
 
         except Exception as e:
-            print("❌ LLM error occurred!")
+            print(" LLM error occurred!")
             traceback.print_exc()
             return "I'm sorry, I couldn't generate a response right now."

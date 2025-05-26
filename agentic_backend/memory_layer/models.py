@@ -27,7 +27,7 @@ class FlaggedResponse(Base):
     reason = Column(String, nullable=False)
     confidence_score = Column(Float)
 
-    conversation_id = Column(String, index=True, nullable=True)  # ✅ Add this line
+    conversation_id = Column(String, index=True, nullable=True)  # Add this line
 
     context = Column(JSON, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
