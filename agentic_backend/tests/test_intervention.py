@@ -7,7 +7,7 @@ class TestInterventionHandler(unittest.TestCase):
         self.handler = InterventionHandler()
 
     def test_queue_and_resolve_review(self):
-        # Queue a fake flagged message
+        # Queue a fake flagged message.
         review_id = self.handler.queue_for_review(
             response="This is suspicious.",
             reason="Test reason",

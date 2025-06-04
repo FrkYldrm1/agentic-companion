@@ -21,7 +21,7 @@ for case in test_cases:
     response = case["response"]
     confidence = case["confidence"]
 
-    print(f"\n🧪 Testing response: {response}")
+    print(f"\n Testing response: {response}")
 
     # Step 1: Run governance check
     result = engine.check(response=response, confidence=confidence)
@@ -41,11 +41,11 @@ for case in test_cases:
         review_id = intervention.queue_for_review(
             response, reason, metadata={"confidence": confidence}
         )
-        print(f"⚠️  Intervention queued — Review ID: {review_id}")
+        print(f"  Intervention queued — Review ID: {review_id}")
     else:
-        print(f"✅ Approved: {reason}")
+        print(f" Approved: {reason}")
 
 # Optionally: Show current review queue
-print("\n📋 Pending reviews:")
+print("\n Pending reviews:")
 for item in intervention.get_pending_reviews():
     print(f" - ID: {item['review_id']}, Reason: {item['reason']}")

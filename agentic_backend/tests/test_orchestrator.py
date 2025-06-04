@@ -37,7 +37,7 @@ class TestOrchestrator(unittest.IsolatedAsyncioTestCase):
         )
         self.assertIsNotNone(flagged)
         self.assertIn("kill", flagged.input_text)
-        print(f"✅ User input flagged and saved: {flagged.input_text}")
+        print(f" User input flagged and saved: {flagged.input_text}")
 
     @patch(
         "orchestration_layer.orchestrator.generate_agent_reply", new_callable=AsyncMock
@@ -61,7 +61,7 @@ class TestOrchestrator(unittest.IsolatedAsyncioTestCase):
         )
         self.assertIsNotNone(flagged)
         self.assertIn("kill", flagged.response_text)
-        print(f"✅ Agent reply flagged and saved: {flagged.response_text}")
+        print(f" Agent reply flagged and saved: {flagged.response_text}")
 
 
 if __name__ == "__main__":

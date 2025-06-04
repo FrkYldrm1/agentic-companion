@@ -7,7 +7,7 @@ from governance_layer.audit_logger import AuditLogger
 
 class TestAuditLogger(unittest.TestCase):
     def test_log_entry_written(self):
-        # Create a temp directory for logs
+        # Create a temp directory for logs.
         with tempfile.TemporaryDirectory() as temp_dir:
             logger = AuditLogger(log_dir=temp_dir)
             logger.log(

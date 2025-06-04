@@ -29,7 +29,7 @@ class TestAgenticAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertIn("reviewing", data["reply"].lower())
-        print(f"✅ Fallback triggered for flagged agent reply: {data['reply']}")
+        print(f" Fallback triggered for flagged agent reply: {data['reply']}")
 
     @patch(
         "orchestration_layer.orchestrator.generate_agent_reply", new_callable=AsyncMock
@@ -49,7 +49,7 @@ class TestAgenticAPI(unittest.TestCase):
         data = response.json()
         self.assertIsInstance(data, list)
         self.assertGreaterEqual(len(data), 1)
-        print(f"✅ Retrieved {len(data)} flagged response(s)")
+        print(f" Retrieved {len(data)} flagged response(s)")
 
     @patch(
         "orchestration_layer.orchestrator.generate_agent_reply", new_callable=AsyncMock
@@ -78,7 +78,7 @@ class TestAgenticAPI(unittest.TestCase):
         )
 
         self.assertEqual(resolve_res.status_code, 200)
-        print(f"✅ Supervisor resolved flag ID {flag['id']} with edited response.")
+        print(f" Supervisor resolved flag ID {flag['id']} with edited response.")
 
     @patch(
         "orchestration_layer.orchestrator.generate_agent_reply", new_callable=AsyncMock
@@ -112,7 +112,7 @@ class TestAgenticAPI(unittest.TestCase):
         self.assertEqual(final.status_code, 200)
         result = final.json()
         self.assertEqual(result["reply"], "Let's do something fun and safe instead.")
-        print(f"✅ Final response delivered: {result['reply']}")
+        print(f" Final response delivered: {result['reply']}")
 
     @patch(
         "orchestration_layer.orchestrator.generate_agent_reply", new_callable=AsyncMock
@@ -139,7 +139,7 @@ class TestAgenticAPI(unittest.TestCase):
         self.assertEqual(final.status_code, 200)
         result = final.json()
         self.assertEqual(result["reply"], flag["response_text"])
-        print(f"✅ Final response (approved) returned: {result['reply']}")
+        print(f" Final response (approved) returned: {result['reply']}")
 
     @patch(
         "orchestration_layer.orchestrator.generate_agent_reply", new_callable=AsyncMock
@@ -173,9 +173,9 @@ class TestAgenticAPI(unittest.TestCase):
         self.assertIn(
             "rejected",
             result["reply"].lower(),
-            f"❌ Final reply was: {result['reply']}",
+            f" Final reply was: {result['reply']}",
         )
-        print(f"✅ Final response (rejected) returned: {result['reply']}")
+        print(f" Final response (rejected) returned: {result['reply']}")
 
 
 if __name__ == "__main__":

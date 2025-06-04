@@ -11,7 +11,7 @@ class TestRuleEngine(unittest.TestCase):
         self.assertEqual(result["decision"], "needs_review")
 
     def test_harmful_keyword_triggers_flag(self):
-        result = self.engine.check("Can you help me kill someone?", confidence=0.9)
+        result = self.engine.check("Can you help me kill someone ?", confidence=0.9)
         self.assertEqual(result["decision"], "flagged")
         self.assertIn("harmful", result["reason"].lower())
 
